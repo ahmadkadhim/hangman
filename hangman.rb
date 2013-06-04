@@ -7,20 +7,21 @@ class Hangman
 	def initialize
 		@chances = 8
 		@previous_letters = []
-		@word = "orange"
+		@word = WORDS[rand(WORDS.length)]
 		@board = draw_board(word)
 	end
 
 	def guesses
-		p "You have already guessed #{previous_letters}"
+		puts "You have already guessed #{previous_letters}"
 	end
 
 	def draw_board(word)
-		board = ""
+		@board = ""
 		print "\n"
-		for i in word.each_char
-			board << "_ "
+		word.length.times do
+		@board << "_ "
 		end
+		puts board
 		print "\n\n"
 		board
 	end
@@ -30,27 +31,39 @@ class Hangman
 	end
 
 	def put_letter_on_board(letter)
-		board = draw_board(word)
 		counter = 0
 		word.each_char do |x|
 			if letter == x
-				board.insert(counter, letter + " ")
+				board[counter] = letter
 			end
 			counter += 2
 		end
-		p board
+		puts board
 	end
 
 	def wrong_letter(letter)
 
-		@previous_letters.push(letter)
-
 		if word_has(letter)
 			put_letter_on_board(letter)
+			puts "#{chances} chances left"
+			puts "You've already guessed these letters: #{previous_letters}"
+		elsif @previous_letters.to_s.include?(letter)
+			draw_board(word)
+			puts "You've already guessed that, goldfish."
+			puts "#{chances} chances left"
+			puts "You've already guessed these letters: #{previous_letters}"
 		else
-			@chances -= 1
-			p "Wrong Guess!"
+			draw_board(word)
+			@chances -= 1 
+			puts "Wrong Guess!"
+			puts "#{chances} chances left"
+			puts "You've already guessed these letters: #{previous_letters}"
 		end
+
+		if !@previous_letters.to_s.include?(letter)
+			@previous_letters.push(letter)
+		end
+
 	end
 
 	def your_guess
@@ -60,9 +73,14 @@ class Hangman
 	end
 
 	def play_game
-		until chances == 0 || !board.include?("_")
+		until chances == 0 || !@board.include?("_")
 			your_guess		
 			wrong_letter(letter)
+		end
+		if chances == 0
+			puts "You're a failure and you've always been a failure"
+		else
+			puts "Success! The money and hoes will follow soon"
 		end
 	end
 
