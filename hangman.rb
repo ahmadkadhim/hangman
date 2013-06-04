@@ -48,12 +48,12 @@ class Hangman
 			puts "#{chances} chances left"
 			puts "You've already guessed these letters: #{previous_letters}"
 		elsif @previous_letters.to_s.include?(letter)
-			draw_board(word)
+			puts boards
 			puts "You've already guessed that, goldfish."
 			puts "#{chances} chances left"
 			puts "You've already guessed these letters: #{previous_letters}"
 		else
-			draw_board(word)
+			puts board
 			@chances -= 1 
 			puts "Wrong Guess!"
 			puts "#{chances} chances left"
