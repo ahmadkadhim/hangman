@@ -17,7 +17,9 @@ class TestHangman < Test::Unit::TestCase
 		assert_equal @game.previous_letters, []
 	end
 
-	def test_dealing_with_invalid_input
-		assert_equal @game.check_valid_input("9"), "invalid guess: singular lowercase letters only, please"
+	def test_evaluating_input
+		assert @game.check_valid_input?("e")
+		assert !@game.check_valid_input?("9")
 	end
+
 end
