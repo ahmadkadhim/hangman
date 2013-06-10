@@ -18,12 +18,10 @@ class Hangman
 	def draw_board(word)
 		@board = ""
 		print "\n"
-		word.length.times do
-		@board << "_ "
-		end
-		puts board
+		"_ " * word.length
+		puts @board
 		print "\n\n"
-		board
+		@board
 	end
 
 	def word_has(letter)
@@ -34,11 +32,17 @@ class Hangman
 		counter = 0
 		word.each_char do |x|
 			if letter == x
-				board[counter] = letter
+				@board[counter] = letter
 			end
 			counter += 2
 		end
-		puts board
+
+		#Khurram's Clean Version:
+		# for i in (0..@word.length)
+		#	@board[i] = letter if @word[i] == letter
+		# end
+
+		puts @board
 	end
 
 	def wrong_letter(letter)
@@ -53,7 +57,7 @@ class Hangman
 			puts "#{chances} chances left"
 			puts "You've already guessed these letters: #{previous_letters}"
 		else
-			puts board
+			puts @board
 			@chances -= 1 
 			puts "Wrong Guess!"
 			puts "#{chances} chances left"
@@ -73,7 +77,7 @@ class Hangman
 	end
 
 	def play_game
-		until chances == 0 || !@board.include?("_")
+		until chances == 0 || @board.include?("_")
 			your_guess		
 			wrong_letter(letter)
 		end
