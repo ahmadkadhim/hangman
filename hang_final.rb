@@ -31,22 +31,16 @@ class Hangman
 		end
 	end
 
-	# def check_valid_input(letter)
-	# 	if letter.match(/[[:lower:]]/) && letter.length == 1
-	# 		word.include?(letter)
-	# 	else
-	# 		puts "Invalid guess: singular lowercase letters only, please"
-	# 		your_guess
-	# 		check_valid_input(@letter)
-	# 	end
-	# end
-
 	def deal_with_invalid_input(letter)
 		if !check_valid_input?(@letter)
 			puts "Invalid guess: singular lowercase letters only, please"
 			your_guess
 			deal_with_invalid_input(@letter)
 		end	
+	end
+
+	def correct_letter?(letter)
+		word.include?(letter) ? true : false
 	end
 
 	def put_letter_on_board(letter)
@@ -58,10 +52,11 @@ class Hangman
 			counter += 2
 		end
 		puts board
+		board
 	end
 
 	def evaluate_letter(letter)
-		if word.include?(letter)
+		if correct_letter?(letter)
 			put_letter_on_board(letter)
 			puts "#{@chances} chances left"
 		elsif @previous_letters.to_s.include?(letter)
@@ -77,6 +72,7 @@ class Hangman
 		if !@previous_letters.to_s.include?(letter)
 			@previous_letters.push(letter)
 		end
+
 		# guessed_letters = previous_letters.to_s
 		# issue 2 to be fixed
 
@@ -99,13 +95,15 @@ class Hangman
 		end
 		if @chances == 0
 			puts "You're a failure and you've always been a failure."
+			return "You're a failure and you've always been a failure."
 		else
 			puts "Success! The money and hoes will soon follow."
+			return "Success! The money and hoes will soon follow."
 		end
 	end
 
 end
 
-h = Hangman.new
+#h = Hangman.new
 
-h.play_game
+#h.play_game
